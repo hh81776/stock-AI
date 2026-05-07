@@ -1,7 +1,6 @@
 {
   "name": "stockai-dashboard",
   "version": "1.0.0",
-  "description": "AI 股票分析 Dashboard",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
