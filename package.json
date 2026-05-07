@@ -1,66 +1,12 @@
-# 📊 StockAI Dashboard
-
-AI 驅動的股票分析平台，輸入任意股票代碼即可獲得完整分析報告。
-
-## 部署到 Railway（推薦）
-
-### 第一步：上傳到 GitHub
-
-1. 前往 [github.com](https://github.com) 建立新 Repository（名稱如 `stockai`）
-2. 把整個資料夾上傳（拖曳所有檔案進去）
-3. 確認有這 4 個檔案：
-   - `server.js`
-   - `package.json`
-   - `public/index.html`
-   - `.gitignore`
-
-### 第二步：部署到 Railway
-
-1. 前往 [railway.app](https://railway.app) 並用 GitHub 登入
-2. 點 **New Project** → **Deploy from GitHub repo**
-3. 選擇你的 `stockai` Repository
-4. Railway 會自動偵測並開始部署
-
-### 第三步：設定 API Key（最重要！）
-
-1. 在 Railway 專案頁面，點選你的服務
-2. 點上方 **Variables** 標籤
-3. 點 **New Variable**
-4. 填入：
-   - Name: `ANTHROPIC_API_KEY`
-   - Value: `你的 API Key（sk-ant-...）`
-5. 點 **Add** → Railway 自動重新部署
-
-### 完成！
-
-Railway 會給你一個網址，例如：
-`https://stockai-production.up.railway.app`
-
-任何人都可以用這個網址存取，完全不需要輸入 API Key。
-
----
-
-## 本機測試
-
-```bash
-# 安裝套件
-npm install
-
-# 設定環境變數（Mac/Linux）
-export ANTHROPIC_API_KEY=你的key
-
-# Windows PowerShell
-$env:ANTHROPIC_API_KEY="你的key"
-
-# 啟動伺服器
-npm start
-
-# 開啟瀏覽器
-open http://localhost:3000
-```
-
----
-
-## 取得 API Key
-
-前往 [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys) 建立免費 API Key。
+{
+  "name": "stockai-dashboard",
+  "version": "1.0.0",
+  "description": "AI 股票分析 Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
