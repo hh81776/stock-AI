@@ -6,7 +6,9 @@ const app = express();
 const PORT = parseInt(process.env.PORT) || 3000;
 
 // ★★★ 把你的 API Key 貼在這裡 ★★★
-const API_KEY = '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';
+
+
+const API_KEY = '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';
 
 app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
