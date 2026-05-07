@@ -5,27 +5,26 @@ const path = require('path');
 const app = express();
 const PORT = parseInt(process.env.PORT) || 3000;
 
-// ★ API Key 直接寫在這裡（之後可以改回環境變數）
-const API_KEY = process.env.ANTHROPIC_API_KEY || '';
+// ★★★ 把你的 API Key 貼在這裡 ★★★
+const API_KEY = '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';
 
 app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/debug', (req, res) => {
   res.json({
-    hasKey: !!API_KEY,
+    hasKey: !!API_KEY && API_KEY !== '在這裡貼上你的sk-ant-api03-開頭的Key',
     keyLength: API_KEY.length,
-    keyPrefix: API_KEY ? API_KEY.substring(0, 14) + '...' : 'NOT FOUND',
-    port: PORT,
-    env_direct: !!process.env.ANTHROPIC_API_KEY
+    port: PORT
   });
 });
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.post('/api/analyze', (req, res) => {
-  if (!API_KEY) {
-    return res.status(500).json({ error: { message: '請設定 ANTHROPIC_API_KEY' } });
+  const key = API_KEY;
+  if (!key || key.includes('在這裡')) {
+    return res.status(500).json({ error: { message: '請在 server.js 第8行填入 API Key' } });
   }
   const body = JSON.stringify(req.body);
   const options = {
@@ -36,7 +35,7 @@ app.post('/api/analyze', (req, res) => {
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(body, 'utf8'),
-      'x-api-key': API_KEY,
+      'x-api-key': key,
       'anthropic-version': '2023-06-01'
     }
   };
@@ -49,7 +48,7 @@ app.post('/api/analyze', (req, res) => {
     });
   });
   apiReq.on('error', err => res.status(500).json({ error: { message: err.message } }));
-  apiReq.setTimeout(60000, () => { apiReq.destroy(); res.status(504).json({ error: { message: '超時' } }); });
+  apiReq.setTimeout(60000, () => { apiReq.destroy(); res.status(504).json({ error: { message: '超時請重試' } }); });
   apiReq.write(body);
   apiReq.end();
 });
@@ -59,6 +58,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log('StockAI port=' + PORT + ' key=' + (API_KEY ? 'SET len=' + API_KEY.length : 'NOT SET'));
+  console.log('StockAI port=' + PORT);
 });
+
 
